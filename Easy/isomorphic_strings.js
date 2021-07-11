@@ -33,20 +33,27 @@ s and t consist of any valid ascii character.
  * @param {string} t
  * @return {boolean}
  */
-var isIsomorphic = function (s, t) {
-  const sDict = {};
-  const tDict = {};
-  
-  for (let i = 0; i < s.length; i++) {
-    if (!sDict[s[i]] && !tDict[t[i]]) {
-      sDict[s[i]] = [i];
-      tDict[t[i]] = [i];
-    } else if (sDict[s[i]] && tDict[t[i]]) {
-      sDict[s[i]].push(i);
-      tDict[t[i]].push(i);
-    } else {
+ var isIsomorphic = function(s, t) {
+  if (s.length !== t.length) {
       return false;
-    }
+  }
+  if (s === t) {
+      return true;
+  }
+  const obj1 = {};
+  const obj2 = {};
+  for(let i = 0; i < s.length; i++) {
+      const letter = s[i];
+      const tLetter = t[i];
+      if (!obj2[tLetter]) {
+          obj2[tLetter] = letter;
+      }
+      if (!obj1[letter]) {
+          obj1[letter] = tLetter;
+      }
+      if (obj1[letter] !== tLetter || obj2[tLetter] !== letter) {
+          return false;
+      }
   }
   return true;
 };
